@@ -4,7 +4,7 @@ require('dotenv').config();
 class DB {
     constructor() {
         this.databaseName = process.env.DB_DATABASE;
-        this.creditial = {
+        this.credential = {
             host     : process.env.DB_HOST,
             user     : process.env.DB_USER,
             password : process.env.DB_PASSWORD,
@@ -18,7 +18,7 @@ class DB {
      */
     connect() {
         this.connection = mysql.createConnection({
-            ...this.creditial,
+            ...this.credential,
             database : this.databaseName,
         });
 
@@ -37,7 +37,7 @@ class DB {
      * @return {Object} instance of Connection
      */
     connectWithoutDB() {
-        this.connection = mysql.createConnection(this.creditial);
+        this.connection = mysql.createConnection(this.credential);
         return this.connection;
     }
 

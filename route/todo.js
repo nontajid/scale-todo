@@ -6,7 +6,7 @@ const Todo = require('../src/todo');
 /**
  * @method get
  * @route /todo/
- * @respose {JSON} all record under todo table
+ * @response {JSON} all record under todo table
  */
 router.get('/', function (req, res) {
   try {
@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
 /**
  * @method get
  * @route /todo/{id}
- * @respose {JSON}  single record of todo item
+ * @response {JSON}  single record of todo item
  */
 router.get('/:todoId(\\d+)', function (req, res) {
   try {
@@ -34,7 +34,7 @@ router.get('/:todoId(\\d+)', function (req, res) {
       const data = todo.data();
 
       if (data === null) {        
-        res.status(404).send({'error': 'Recond Not Found'});
+        res.status(404).send({'error': 'Record Not Found'});
         return;
       }
 
@@ -53,7 +53,7 @@ router.get('/:todoId(\\d+)', function (req, res) {
  * @method post
  * @route /todo/
  * @request {JSON} body contain info to create new record
- * @respose {JSON} id of newly created record
+ * @response {JSON} id of newly created record
  */
 router.post('/', function (req, res) {
   try {
@@ -100,7 +100,7 @@ router.patch('/:todoId(\\d+)', function (req, res) {
   .then((_todo) => {
     todo = _todo;
     if (todo.data() === null) {
-      res.status(404).send({'error': 'Recond Not Found'});
+      res.status(404).send({'error': 'Record Not Found'});
       return;
     }
 
@@ -132,7 +132,7 @@ router.delete('/:todoId(\\d+)', function (req, res) {
     try {
       Todo.delete(parseInt(req.params.todoId))
       .then(result => {
-        if (!result) res.status(404).send({'error': 'Recond Not Found'});
+        if (!result) res.status(404).send({'error': 'Record Not Found'});
         res.status(200).send();
       });
     } catch (error) {

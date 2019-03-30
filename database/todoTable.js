@@ -3,12 +3,12 @@ const DB = require('../src/db');
 class TodoTable {
     constructor() {
         this.db = new DB;
-        this.tablename = `todo`;
+        this.tableName = `todo`;
     }
     
     up() {
         this.db.connect();
-        const query = `CREATE TABLE IF NOT EXISTS ${this.tablename} (
+        const query = `CREATE TABLE IF NOT EXISTS ${this.tableName} (
                             id INT AUTO_INCREMENT,
                             subject VARCHAR(255) NOT NULL,
                             content TEXT NULL,
@@ -21,21 +21,21 @@ class TodoTable {
                 this.db.close();
             })
             .then(() => {
-                console.log(`table: ${this.tablename} created`);
+                console.log(`table: ${this.tableName} created`);
             })
             .catch((error) => reject(error));
     }
 
     down() {
         this.db.connect();
-        const query = `DROP TABLE IF EXISTS ${this.tablename}`;
+        const query = `DROP TABLE IF EXISTS ${this.tableName}`;
 
         return this.db.query(query)
                 .then(() => {
                     this.db.close();
                 })
                 .then(() => {
-                    console.log(`table: ${this.tablename} dropped`);
+                    console.log(`table: ${this.tableName} dropped`);
                 })
                 .catch((error) => reject(error));
     }

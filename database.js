@@ -6,16 +6,16 @@ class Database {
         this.db = new DB;
         this.todoTable = new TodoTable();
         this.db.connectWithoutDB();
-        this.databasename = this.db.databaseName;        
+        this.databaseName = this.db.databaseName;        
     }
 
     createDatabase() {
-        const query = `CREATE DATABASE IF NOT EXISTS ${this.databasename}`;
+        const query = `CREATE DATABASE IF NOT EXISTS ${this.databaseName}`;
         return this.db.query(query);
     }
 
     dropDatabase() {
-        const query = `DROP DATABASE IF EXISTS ${this.databasename}`;
+        const query = `DROP DATABASE IF EXISTS ${this.databaseName}`;
         return this.db.query(query);
     }
 
@@ -33,7 +33,7 @@ class Database {
     upSequent() {
         this.createDatabase()
         .then(() => {
-            console.log(`database: ${this.databasename} created`);
+            console.log(`database: ${this.databaseName} created`);
             this.createTable()
         })
         .then( () => {
@@ -47,13 +47,13 @@ class Database {
             this.dropDatabase()
         })
         .then(() => {
-            console.log(`database: ${this.databasename} dropped`);
+            console.log(`database: ${this.databaseName} dropped`);
             this.db.close()
         });
     }
 }
 
-// Get Command line Arrgument 
+// Get Command line Argument 
 const firstArg = process.argv[2];
 const database = new Database;
 

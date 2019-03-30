@@ -4,7 +4,7 @@ class Todo {
     constructor() {
         this.db = new DB();
         this.db.connect();
-        this.tablename = "todo";
+        this.tableName = "todo";
 
         this._id;
         this.subject;
@@ -20,7 +20,7 @@ class Todo {
     }
 
     /**
-     * Insert or update current instace property into database 
+     * Insert or update current instance property into database 
      * 
      * @return {Promise<Object>} response object from mysql
      */
@@ -30,10 +30,10 @@ class Todo {
         let query;
         
         if ( !this.id ) {
-            query = `INSERT INTO ${this.tablename} (subject, content, status)
+            query = `INSERT INTO ${this.tableName} (subject, content, status)
                         VALUES (${data.subject}, ${data.content}, ${data.status});`;
         } else {
-            query = `UPDATE ${this.tablename}
+            query = `UPDATE ${this.tableName}
                         SET subject = ${data.subject}, content = ${data.content}, status = ${data.status}
                         WHERE id = ${data.id};`
         }
@@ -57,7 +57,7 @@ class Todo {
      */
     getAll() {
         const query  =  `SELECT *
-                        FROM ${this.tablename}`;
+                        FROM ${this.tableName}`;
 
         return this.db.query(query)
                 .then(rows => {
@@ -73,7 +73,7 @@ class Todo {
      */
     get() {
         const query  =  `SELECT *
-                        FROM ${this.tablename}
+                        FROM ${this.tableName}
                         WHERE id = ${this.id}`;
         
         return this.db.query(query)
@@ -85,7 +85,7 @@ class Todo {
     }
 
     /**
-     * Populate data to property in current instace
+     * Populate data to property in current instance
      */
     set(data) {
         this.id = data.id;
@@ -101,7 +101,7 @@ class Todo {
      */
     delete() {
         const query  =  `DELETE
-            FROM ${this.tablename}
+            FROM ${this.tableName}
             WHERE id = ${this.id}`;
 
             return this.db.query(query)
@@ -150,7 +150,7 @@ class Todo {
     /**
      * @param {number} id of todo item
      * 
-     * @return {Promise} instace of todo
+     * @return {Promise} instance of todo
      */
     static find(id) {
         const todo = new Todo();
@@ -182,7 +182,7 @@ class Todo {
 
 
     /**
-     * @param {number} id uniqe identifier for todo item
+     * @param {number} id unique identifier for todo item
      * @param {Object} data data object to store into database
      * 
      * @return {Promise<Todo>} Instance of new inserted todo
@@ -209,7 +209,7 @@ class Todo {
     }
 
     /**
-     * @param {number} id uniqe identifier for todo item
+     * @param {number} id unique identifier for todo item
      * 
      * @return {Promise<Boolean>} indicate result of delete
      */
