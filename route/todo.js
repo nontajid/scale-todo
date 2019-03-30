@@ -89,6 +89,42 @@ router.put('/:todoId(\\d+)', function (req, res) {
 });
 
 /**
+ * @method patch
+ * @route /todo/{id}
+ */
+router.patch('/:todoId(\\d+)', function (req, res) {
+  let todo;
+  const patchAllow = ['status','content'];
+
+  Todo.find(parseInt(req.params.todoId))
+  .then((_todo) => {
+    todo = _todo;
+    if (todo.data() === null) {
+      res.status(404).send({'error': 'Recond Not Found'});
+      return;
+    }
+
+    Object.keys(req.body).forEach(key => {
+      if(patchAllow.includes(key)) {
+        todo[key] = req.body[key];
+      }
+    });
+
+    todo.db.connect(); // reconnect to db since find close connection
+    return todo.save();
+  })
+  .then(() => {
+    return todo.get();
+  })
+  .then(() => {
+    res.json(todo.data());
+  })
+  .catch(error => {
+    res.status(500).send({'error': error});
+  });
+});
+
+/**
  * @method delete
  * @route /todo/
  */

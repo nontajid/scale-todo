@@ -79,9 +79,19 @@ class Todo {
         return this.db.query(query)
                 .then(rows => {
                     this._dbResult = rows[0] || null;
-                    
+                    if(this._dbResult) this.set(this._dbResult);
                     return this._dbResult;
                 });
+    }
+
+    /**
+     * Populate data to property in current instace
+     */
+    set(data) {
+        this.id = data.id;
+        this.subject = data.subject;
+        this.content = data.content;
+        this.status = data.status;
     }
 
     /**
