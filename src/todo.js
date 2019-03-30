@@ -37,10 +37,9 @@ class Todo {
                         SET subject = ${data.subject}, content = ${data.content}, status = ${data.status}
                         WHERE id = ${data.id};`
         }
-        
+                
         return this.db.query(query)
                 .then((res) => {
-                    this.db.close()
                     this._dbResult = res;
                     if ( res.insertId ) this.id = res.insertId;
 
@@ -62,7 +61,6 @@ class Todo {
 
         return this.db.query(query)
                 .then(rows => {
-                    this.db.close();
                     this._dbResult = rows;
                     return rows;
                 });
@@ -80,7 +78,6 @@ class Todo {
         
         return this.db.query(query)
                 .then(rows => {
-                    this.db.close();
                     this._dbResult = rows[0] || null;
                     
                     return this._dbResult;
@@ -99,7 +96,6 @@ class Todo {
 
             return this.db.query(query)
             .then(res => {
-                this.db.close();
                 this._dbResult = res;
                 return res;
             });
@@ -134,6 +130,7 @@ class Todo {
 
         return todo.getAll()
         .then((rows) => {
+            todo.db.close();
             return rows;
         });
     }
@@ -149,6 +146,7 @@ class Todo {
 
         return todo.get()
                 .then( row => {
+                    todo.db.close();
                     return todo;
                 });
     }
@@ -163,9 +161,13 @@ class Todo {
         todo.subject = data.subject;
         todo.content = data.content;
         todo.status = data.status;
-        return todo.save().then(() => {return todo});
+        return todo.save()
+                .then(() => {
+                    todo.db.close();
+                    return todo
+                });
     }
-
+    
 
     /**
      * @param {number} id uniqe identifier for todo item
