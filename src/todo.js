@@ -112,12 +112,14 @@ class Todo {
     }
 
     /**
-     * @param {Object} data optional data object to be validated
+     * @param {Object} data data object to be validated
      */
-    _validate(data) {
-        data = data || this;
+    _validate(data) {        
+        data = data;        
+        
         if (!data.subject) throw "subject can not be empty";
         if (!data.status) throw "status can not be empty";
+        if (data.status != `'pending'` && data.status != `'done'`) throw "status can only be pending or done";
     }
 
     /**
