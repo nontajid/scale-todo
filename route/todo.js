@@ -70,6 +70,25 @@ router.post('/', function (req, res) {
 })
 
 /**
+ * @method put
+ * @route /todo/{id}
+ */
+router.put('/:todoId(\\d+)', function (req, res) {
+  try {
+    Todo.update(parseInt(req.params.todoId),req.body)
+    .then(todo => {
+      const data = todo.data();
+      res.json(data);
+    })
+    .catch(error => {
+      res.status(500).send({'error': error});
+    }); 
+  } catch (error) {
+    res.status(500).send({'error': error});
+  }
+});
+
+/**
  * @method delete
  * @route /todo/
  */

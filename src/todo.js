@@ -167,7 +167,34 @@ class Todo {
                     return todo
                 });
     }
-    
+
+
+    /**
+     * @param {number} id uniqe identifier for todo item
+     * @param {Object} data data object to store into database
+     * 
+     * @return {Promise<Todo>} Instance of new inserted todo
+     */
+    static update(id,data) {
+        const todo = new Todo();
+        todo.id = id;
+        
+        return todo.get()
+                .then((row) => {
+                    if (row === null) throw 'Record Not Found';
+                    todo.subject = data.subject;
+                    todo.content = data.content;
+                    todo.status = data.status;
+                    return todo.save();
+                })
+                .then(() => {
+                    return todo.get();
+                })
+                .then(() => {
+                    todo.db.close();
+                    return todo;
+                });
+    }
 
     /**
      * @param {number} id uniqe identifier for todo item
