@@ -116,7 +116,7 @@ class Todo {
     _getDataForDB() {
         return {
             id: this.id,
-            subject: `'${this.subject}'`,
+            subject: this.subject? `'${this.subject}'`: null,
             content: this.content? `'${this.content}'`: null,
             status: this.status? `'${this.status}'` : `'pending'`
         }
