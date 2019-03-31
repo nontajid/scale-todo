@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+    mysql:
+        build: ./docker-db
+        environment:
+            MYSQL_ROOT_PASSWORD: 'very-hard-password'
+        volumes:
+            - my-sql-data:/var/lib/mysql
+        healthcheck:
+            test: "exit 0"
+    
+    scale:
+        build: .
+        depends_on:
+            mysql:
+                condition: service_healthy
+        entrypoint:
+            - /usr/local/bin/docker-entrypoint.sh
+        ports:
+            - "3000:3000"
+volumes:
+  my-sql-data:
